@@ -32,3 +32,25 @@ resources:
         AvailabilityZone: us-east-1b
         Tags:
           - { Key: Name, Value: Sub System Private B }
+    LambdaSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: SecurityGroup for Lambda Functions
+        VpcId: !Ref VPC
+        Tags:
+          - Key: "Name"
+            Value: "LambdaSecurityGroup"
+    AuroraSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: SecurityGroup for Aurora
+        VpcId: !Ref VPC
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 3306
+            ToPort: 3306
+            CidrIp: 10.0.0.0/24
+        Tags:
+          - Key: "Name"
+            Value: "AuroraSecurityGroup"
+      DependsOn: VPC
