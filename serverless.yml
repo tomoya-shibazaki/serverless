@@ -1,0 +1,34 @@
+service: elearning-subsystem
+frameworkVersion: "2"
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  region: us-east-1
+  profile: sls
+
+resources:
+  Resources:
+  # VPC Resource
+    VPC:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/24
+        Tags:
+          - { Key: Name, Value: Sub System VPC }
+    PrivateSubnetA:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref VPC
+        CidrBlock: 10.0.0.0/25
+        AvailabilityZone: us-east-1a
+        Tags:
+          - { Key: Name, Value: Sub System Private A }
+    PrivateSubnetB:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref VPC
+        CidrBlock: 10.0.0.128/25
+        AvailabilityZone: us-east-1b
+        Tags:
+          - { Key: Name, Value: Sub System Private B }
