@@ -7,6 +7,9 @@ provider:
   region: us-east-1
   profile: sls
 
+plugins:
+  - serverless-pseudo-parameters
+
 custom:
   defaultStage: dev
   secret: ${file(./config/secret/.secret.${opt:stage, self:custom.defaultStage}.yml)}
@@ -101,3 +104,72 @@ resources:
         EngineVersion: "5.7.12"
         DBInstanceClass: db.t3.medium
       DependsOn: DBCluster
+    AuroraSecret:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Name: Sample/aurora
+        SecretString: '{"username":"${self:custom.secret.USER_NAME}", "password":"${self:custom.secret.PASSWORD}"}'
+    SecretTargetAttachment:
+      Type: AWS::SecretsManager::SecretTargetAttachment
+      Properties:
+        SecretId: !Ref AuroraSecret
+        TargetId: !Ref DBCluster
+        TargetType: "AWS::RDS::DBCluster"
+      DependsOn: DBCluster
+    ProxyRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: subsystem-proxy-role
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - "rds.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Path: /
+        Policies:
+          - PolicyName: RdsProxyPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "secretsmanager:GetResourcePolicy"
+                    - "secretsmanager:GetSecretValue"
+                    - "secretsmanager:DescribeSecret"
+                    - "secretsmanager:ListSecretVersionIds"
+                  Resource:
+                    - !Ref AuroraSecret
+                - Effect: Allow
+                  Action:
+                    - "kms:Decrypt"
+                  Resource: "arn:aws:kms:${self:provider.region}:#{AWS::AccountId}:key/*"
+                  Condition:
+                    StringEquals:
+                      kms:ViaService: "secretsmanager.${self:provider.region}.amazonaws.com"
+      DependsOn: AuroraSecret
+    RDSProxy:
+      Type: AWS::RDS::DBProxy
+      Properties:
+        DBProxyName: SubSystemAuroraProxy
+        Auth:
+          - SecretArn: !Ref AuroraSecret
+        VpcSecurityGroupIds:
+          - !Ref AuroraSecurityGroup
+        VpcSubnetIds:
+          - !Ref PrivateSubnetA
+          - !Ref PrivateSubnetB
+        EngineFamily: MYSQL
+        RoleArn: !GetAtt ProxyRole.Arn
+      DependsOn: AuroraSecret
+    DBProxyTargetGroup:
+      Type: AWS::RDS::DBProxyTargetGroup
+      Properties:
+        TargetGroupName: default
+        DBProxyName: !Ref RDSProxy
+        DBClusterIdentifiers:
+          - !Ref DBCluster
+      DependsOn: RDSProxy
