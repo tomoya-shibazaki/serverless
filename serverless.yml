@@ -7,9 +7,13 @@ provider:
   region: us-east-1
   profile: sls
 
+custom:
+  defaultStage: dev
+  secret: ${file(./config/secret/.secret.${opt:stage, self:custom.defaultStage}.yml)}
+
 resources:
   Resources:
-  # VPC Resource
+    # VPC Resource
     VPC:
       Type: AWS::EC2::VPC
       Properties:
@@ -54,3 +58,46 @@ resources:
           - Key: "Name"
             Value: "AuroraSecurityGroup"
       DependsOn: VPC
+    # RDS Resource
+    DBSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: "Sub System subnet group"
+        DBSubnetGroupName: subsystemdb-subnet-group
+        SubnetIds:
+          - !Ref PrivateSubnetA
+          - !Ref PrivateSubnetB
+    DBCluster:
+      Type: AWS::RDS::DBCluster
+      Properties:
+        DatabaseName: SubSystemDB
+        Engine: aurora-mysql
+        EngineVersion: "5.7.12"
+        MasterUsername: ${self:custom.secret.USER_NAME}
+        MasterUserPassword: ${self:custom.secret.PASSWORD}
+        DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+        DBSubnetGroupName: !Ref DBSubnetGroup
+        VpcSecurityGroupIds:
+          - !Ref AuroraSecurityGroup
+      DependsOn: DBSubnetGroup
+    DBClusterParameterGroup:
+      Type: AWS::RDS::DBClusterParameterGroup
+      Properties:
+        Description: A parameter group for aurora
+        Family: aurora-mysql5.7
+        Parameters:
+          character_set_client: utf8mb4
+          character_set_connection: utf8mb4
+          character_set_database: utf8mb4
+          character_set_results: utf8mb4
+          character_set_server: utf8mb4
+          time_zone: Asia/Tokyo
+    DBInstance1:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        DBClusterIdentifier: !Ref DBCluster
+        DBSubnetGroupName: !Ref DBSubnetGroup
+        Engine: aurora-mysql
+        EngineVersion: "5.7.12"
+        DBInstanceClass: db.t3.medium
+      DependsOn: DBCluster
