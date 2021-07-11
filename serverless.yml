@@ -107,7 +107,7 @@ resources:
     AuroraSecret:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: Sample/aurora
+        Name: SubSystem/aurora
         SecretString: '{"username":"${self:custom.secret.USER_NAME}", "password":"${self:custom.secret.PASSWORD}"}'
     SecretTargetAttachment:
       Type: AWS::SecretsManager::SecretTargetAttachment
