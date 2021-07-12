@@ -3,6 +3,7 @@ frameworkVersion: "2"
 provider:
   name: aws
   runtime: python3.8
+  lambdaHashingVersion: 20201221
   stage: dev
   region: us-east-1
   profile: sls
@@ -173,3 +174,21 @@ resources:
         DBClusterIdentifiers:
           - !Ref DBCluster
       DependsOn: RDSProxy
+# Lambda, API Gateway
+functions:
+  testFunc:
+    name: test_func
+    handler: src/handlers/test_func.handler
+    description: "Test Connest"
+    vpc:
+      securityGroupIds:
+        - !Ref LambdaSecurityGroup
+      subnetIds:
+        - !Ref PrivateSubnetA
+        - !Ref PrivateSubnetB
+    events:
+      - http:
+          path: /test
+          method: post
+          cors:
+            origin: '*'
