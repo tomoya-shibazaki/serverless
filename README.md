@@ -16,10 +16,12 @@
   - DB
   - Lambda
 
-# Lambda 実行ロールに Amazon S3 バケットへのアクセスを許可する
+# Vpc と S3 の疎通
+### IAM Role 
+- Lambda 実行ロールに Amazon S3 バケットへのアクセスを許可する
   - https://aws.amazon.com/jp/premiumsupport/knowledge-center/lambda-execution-role-s3-bucket/
 
-# Vpc Endpoint
+### Vpc Endpoint
 - VPC Lambda から S3 へ接続するためには VPC Endpoint を設定する.
   - https://aws.amazon.com/blogs/aws/new-vpc-endpoint-for-amazon-s3/
 
