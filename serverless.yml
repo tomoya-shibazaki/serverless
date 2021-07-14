@@ -1,5 +1,7 @@
 service: elearning-subsystem
 frameworkVersion: "2"
+useDotenv: true
+variablesResolutionMode: 20210326
 provider:
   name: aws
   runtime: python3.8
@@ -184,6 +186,11 @@ functions:
   testFunc:
     name: test_func
     handler: src/handlers/test_func.handler
+    environment:
+      USER_NAME: ${env:USER_NAME}
+      PASSWORD: ${env:PASSWORD}
+      DB_NAME: ${env:DB_NAME}
+      RDS_HOST: ${env:RDS_HOST} # Proxy
     description: "Test Connest"
     vpc:
       securityGroupIds:
@@ -194,6 +201,24 @@ functions:
     events:
       - http:
           path: /test
+          method: post
+          cors:
+            origin: '*'
+# VPC Lambda から S3 へ接続するためには VPC Endpoint を設定する必要がある。
+# https://aws.amazon.com/blogs/aws/new-vpc-endpoint-for-amazon-s3/
+  testFunc2:
+    name: test_func2
+    handler: src/handlers/test_func2.handler
+    description: "Test Connest2"
+    vpc:
+      securityGroupIds:
+        - !Ref LambdaSecurityGroup
+      subnetIds:
+        - !Ref PrivateSubnetA
+        - !Ref PrivateSubnetB
+    events:
+      - http:
+          path: /test2
           method: post
           cors:
             origin: '*'
