@@ -4,6 +4,13 @@
 # デプロイ
 `sls deploy -v`
 
+# S3
+- ファイルを置く
+
+# 環境変数の設定 .env
+  - DB
+  - Lambda
+
 # Vpc Endpoint
 - VPC Lambda から S3 へ接続するためには VPC Endpoint を設定する.
   - https://aws.amazon.com/blogs/aws/new-vpc-endpoint-for-amazon-s3/
