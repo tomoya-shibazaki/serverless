@@ -5,7 +5,7 @@
 `sls deploy -v`
 
 # S3
-- ファイルを置く
+- jsonファイルを置く
 
 # 環境変数の設定 .env
   - DB
