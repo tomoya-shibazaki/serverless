@@ -34,3 +34,8 @@
 
 - Amazon EC2 インスタンスを踏み台ホストとして使用して、ローカルマシンからプライベート Amazon RDS DB インスタンスに接続する
   - https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/?nc1=h_ls
+
+# Bastion(踏み台)サーバー
+- https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/?nc1=h_ls
+  - Public Subnet, Internet Gateway, Elastic IP(Public IP), Security Group
+  - mysql
