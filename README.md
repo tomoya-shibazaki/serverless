@@ -14,3 +14,6 @@ https://aws.amazon.com/jp/premiumsupport/knowledge-center/auth0-saml-cognito-use
 
 - SAML ユーザープール IdP 認証フロー
 https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-user-pools-saml-idp-authentication.html
+
+- Amazon EC2 インスタンスを踏み台ホストとして使用して、ローカルマシンからプライベート Amazon RDS DB インスタンスに接続する
+https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/?nc1=h_ls
