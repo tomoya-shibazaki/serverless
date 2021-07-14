@@ -30,7 +30,7 @@ resources:
       Type: AWS::EC2::Subnet
       Properties:
         VpcId: !Ref VPC
-        CidrBlock: 10.0.0.0/25
+        CidrBlock: 10.0.0.0/26
         AvailabilityZone: us-east-1a
         Tags:
           - { Key: Name, Value: Sub System Private A }
@@ -38,7 +38,7 @@ resources:
       Type: AWS::EC2::Subnet
       Properties:
         VpcId: !Ref VPC
-        CidrBlock: 10.0.0.128/25
+        CidrBlock: 10.0.0.64/26
         AvailabilityZone: us-east-1b
         Tags:
           - { Key: Name, Value: Sub System Private B }
