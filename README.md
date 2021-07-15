@@ -16,7 +16,7 @@
   - DB
   - Lambda
 
-# Vpc と S3 の疎通
+# Vpc Labmda と S3 の疎通
 ### IAM Role 
 - Lambda 実行ロールに Amazon S3 バケットへのアクセスを許可する
   - https://aws.amazon.com/jp/premiumsupport/knowledge-center/lambda-execution-role-s3-bucket/
