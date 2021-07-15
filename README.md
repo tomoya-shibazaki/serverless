@@ -39,3 +39,15 @@
 - https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/?nc1=h_ls
   - Public Subnet, Internet Gateway, Elastic IP(Public IP), Security Group
   - mysql
+
+
+# 静的ウェブサイトのホスティング
+### bucket 作成
+- `aws --profile $profile s3api create-bucket --bucket $bucket_name`
+### 静的ウェブサイトの設定
+- `aws --profile $profile s3 website \
+    --index-document index.html \
+    --error-document error.html \
+    s3://elearning-sub-ui`
+### デプロイ
+- `aws --profile $profile s3 sync public/ s3://$bucket_name --acl public-read`
