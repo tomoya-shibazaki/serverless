@@ -43,6 +43,7 @@
 
 
 # 静的ウェブサイトのホスティング
+http://elearning-sub-ui.s3-website-us-east-1.amazonaws.com/
 ### bucket 作成
 - `aws --profile $profile s3api create-bucket --bucket $bucket_name`
 ### 静的ウェブサイトの設定
