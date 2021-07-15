@@ -46,7 +46,7 @@
 ### bucket 作成
 - `aws --profile $profile s3api create-bucket --bucket $bucket_name`
 ### 静的ウェブサイトの設定
-- `aws --profile $profile s3 website --index-document index.html --error-document error.html s3://elearning-sub-ui`
+- `aws --profile $profile s3 website --index-document index.html --error-document error.html s3://$bucket_name`
 ### デプロイ
 - `aws --profile $profile s3 sync public/ s3://$bucket_name --acl public-read`
 
