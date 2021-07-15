@@ -51,3 +51,4 @@
 
 # CORS設定
 - APIGateway, Lambda, S3
+  - https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-cors-errors/ 
