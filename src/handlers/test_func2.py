@@ -17,6 +17,10 @@ def handler(event, context):
     return {
         'isBase64Encoded': False,
         'statusCode': 200,
-        'headers': {},
+        "headers": {
+            "Access-Control-Allow-Headers" : "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST"
+        },
         'body': str(json.loads(body.decode('utf-8')))
     }
