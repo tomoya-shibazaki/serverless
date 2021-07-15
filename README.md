@@ -1,5 +1,5 @@
 # AWS構成
-![AWS構成](https://user-images.githubusercontent.com/24289696/125838567-2cebc952-0602-4e85-a7ad-04060151e9b6.jpg)
+![AWS構成予定](https://user-images.githubusercontent.com/24289696/125852730-960f8145-34e8-49a4-9671-e21a57a807e2.jpg)
 
 
 # デプロイ
