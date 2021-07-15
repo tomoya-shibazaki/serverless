@@ -1,5 +1,6 @@
 # AWS構成
-![AWS構成予定](https://user-images.githubusercontent.com/24289696/125702194-6b7b3f7f-a67a-4685-ab08-4407994b4897.jpg)
+![AWS構成](https://user-images.githubusercontent.com/24289696/125838431-f3515a5f-9eff-41ca-a936-de576820969f.jpg)
+
 
 # デプロイ
 `sls deploy -v`
