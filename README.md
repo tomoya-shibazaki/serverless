@@ -48,3 +48,6 @@
 - `aws --profile $profile s3 website --index-document index.html --error-document error.html s3://elearning-sub-ui`
 ### デプロイ
 - `aws --profile $profile s3 sync public/ s3://$bucket_name --acl public-read`
+
+# CORS設定
+- APIGateway, Lambda, S3
