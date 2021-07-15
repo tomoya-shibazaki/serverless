@@ -54,3 +54,4 @@ http://elearning-sub-ui.s3-website-us-east-1.amazonaws.com/
 # CORS設定
 - APIGateway, Lambda, S3
   - https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-cors-errors/ 
+  - https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/how-to-cors.html
