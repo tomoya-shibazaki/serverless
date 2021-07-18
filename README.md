@@ -40,6 +40,7 @@
 - https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-connect-ec2-bastion-host/?nc1=h_ls
   - Public Subnet, Internet Gateway, Elastic IP(Public IP), Security Group
   - mysql client
+  　　-　https://forums.aws.amazon.com/thread.jspa?threadID=280202
 
 
 # 静的ウェブサイトのホスティング
